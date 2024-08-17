@@ -1,12 +1,24 @@
-import { View, Text } from 'react-native'
+import { View, Text, Image } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
 import { TabBarIcon } from '@/components/navigation/TabBarIcon'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
+import Colors from '@/constants/Colors'
 
 export default function Layout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: Colors.bgColor,
+          borderTopWidth: 0,
+          padding: 0,
+        },
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: Colors.Black,
+        tabBarInactiveTintColor: '#999',
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
@@ -27,7 +39,22 @@ export default function Layout() {
         name="ai"
         options={{
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="smart-toy" size={28} color={color} />
+            <View
+              style={{
+                backgroundColor: Colors.AI,
+                paddingHorizontal: 12,
+                paddingVertical: 12,
+                borderRadius: 30,
+                height: 50,
+                bottom: 30,
+              }}
+            >
+              <Image
+                source={require('@/assets/images/ai.png')}
+                style={{ width: 28, height: 28 }}
+                resizeMode="contain"
+              />
+            </View>
           ),
         }}
       />
