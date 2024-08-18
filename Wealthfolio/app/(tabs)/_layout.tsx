@@ -46,7 +46,7 @@ export default function Layout() {
                 paddingVertical: 12,
                 borderRadius: 30,
                 height: 50,
-                bottom: 30,
+                bottom: 25,
               }}
             >
               <Image
