@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "766148369894",
+    "project_id": "wealthfolio-61335",
+    "storage_bucket": "wealthfolio-61335.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766148369894:android:46c2a38402532381964a27",
+        "android_client_info": {
+          "package_name": "com.ads.wealthfolio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYCyQti94lIZYd1QufJZ9si9mAR_pD4vg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
