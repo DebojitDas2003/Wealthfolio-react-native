@@ -30,6 +30,8 @@ export default function Login() {
           body: JSON.stringify({
             Email: email,
             PasswordHash: password,
+            client_id: '0037a3a1-5ca9-4120-95ad-cfca2736232b',
+            client_secret: 'b4285a0e-19cf-40a4-8853-42bd4d50e3d3',
           }),
         }
       )
