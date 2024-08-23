@@ -1,11 +1,9 @@
-import { Stack } from 'expo-router'
+import { Slot, Stack } from 'expo-router'
 
-export default function RootLayout() {
+export default function Layout() {
   return (
     <Stack>
-      <Stack.Screen name="index" />
-      <Stack.Screen name="login" />
-      <Stack.Screen name="register" />
+      <Slot />
     </Stack>
   )
 }

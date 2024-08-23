@@ -1,47 +1,95 @@
-// login.tsx
-import React, { useState } from 'react'
-import { View, TextInput, Button, Text, Alert } from 'react-native'
+import { useState } from 'react'
 
-export default function LoginScreen() {
+import {
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  Button,
+  ActivityIndicator,
+} from 'react-native'
+import { useRouter } from 'expo-router'
+
+export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const router = useRouter()
 
-  const handleLogin = async () => {
+  const signIn = async () => {
+    setLoading(true)
     try {
       const response = await fetch(
-        'http://your-flask-server-url/auth_redirect/login',
+        'http://127.0.0.1:5000/auth_redirect/signin',
         {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            Email: email,
+            PasswordHash: password,
+          }),
         }
       )
 
-      const data = await response.json()
+      const result = await response.json()
 
       if (response.ok) {
-        // Handle successful login, e.g., navigate to home screen
-        Alert.alert('Login Successful', data.message)
+        router.push('/home')
       } else {
-        // Handle errors
-        Alert.alert('Login Failed', data.message)
+        setError(`Sign in failed: ${result.message}`)
       }
-    } catch (error) {
-      console.error('Error:', error)
-      Alert.alert('Error', 'An error occurred. Please try again.')
+    } catch (err) {
+      setError('Sign in failed: ' + (err as Error).message)
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
-    <View>
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
+    <View style={styles.container}>
+      <Text style={{ fontSize: 24, marginBottom: 20 }}>Sign In</Text>
       <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.input}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Login" onPress={handleLogin} />
+      {loading ? (
+        <ActivityIndicator size={'small'} style={{ margin: 28 }} />
+      ) : (
+        <>
+          <Button title="Sign In" onPress={signIn} />
+          <Button title="Sign Up" onPress={() => router.push('/register')} />
+        </>
+      )}
+      <Text style={{ color: 'red', marginTop: 10 }}>{error}</Text>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 20,
+    flex: 1,
+    justifyContent: 'center',
+  },
+  input: {
+    marginVertical: 10,
+    height: 40,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+  },
+})
