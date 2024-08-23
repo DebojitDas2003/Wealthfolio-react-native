@@ -8,8 +8,6 @@ import {
   Button,
   ActivityIndicator,
 } from 'react-native'
-import auth from '@react-native-firebase/auth'
-import { FirebaseError } from '@firebase/app'
 
 export default function Index() {
   const [email, setEmail] = useState('')
@@ -20,11 +18,29 @@ export default function Index() {
   const signUp = async () => {
     setLoading(true)
     try {
-      await auth().createUserWithEmailAndPassword(email, password)
-      alert('User account created & signed in!')
-    } catch (e: any) {
-      const err = e as FirebaseError
-      alert('Registration failed: ' + err.message)
+      const response = await fetch('http://127.0.0.1:5000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          FirstName: 'John', // Replace with actual data
+          LastName: 'Doe', // Replace with actual data
+          UserName: email, // Assuming UserName is the email
+          Email: email,
+          PasswordHash: password,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        alert('User account created!')
+      } else {
+        alert(`Registration failed: ${result.message}`)
+      }
+    } catch (err) {
+      alert('Registration failed: ' + (err as Error).message)
     } finally {
       setLoading(false)
     }
@@ -33,11 +49,26 @@ export default function Index() {
   const signIn = async () => {
     setLoading(true)
     try {
-      await auth().signInWithEmailAndPassword(email, password)
-      alert('Welcome back!')
-    } catch (e: any) {
-      const err = e as FirebaseError
-      alert('Sign in failed: ' + err.message)
+      const response = await fetch('http://your-server-ip:5000/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          Email: email,
+          PasswordHash: password,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        alert('Welcome back!')
+      } else {
+        alert(`Sign in failed: ${result.message}`)
+      }
+    } catch (err) {
+      alert('Sign in failed: ' + (err as Error).message)
     } finally {
       setLoading(false)
     }
