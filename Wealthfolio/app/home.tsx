@@ -48,6 +48,10 @@ export default function Home() {
     },
   ]
 
+  const viewAll = () => {
+    router.push('/transactions')
+  }
+
   const renderItem = ({
     item,
   }: {
@@ -176,7 +180,7 @@ export default function Home() {
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.listContent}
           />
-          <TouchableOpacity style={styles.viewAllButton}>
+          <TouchableOpacity style={styles.viewAllButton} onPress={viewAll}>
             <Text style={styles.viewAllText}>view all</Text>
           </TouchableOpacity>
         </View>
