@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Text,
   View,
@@ -7,32 +7,52 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
-  Dimensions
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import { FontAwesome } from '@expo/vector-icons';
-import { RFPercentage } from 'react-native-responsive-fontsize';
+  Dimensions,
+} from 'react-native'
+import { useRouter } from 'expo-router'
+import { FontAwesome } from '@expo/vector-icons'
+import { RFPercentage } from 'react-native-responsive-fontsize'
 
-const { width, height } = Dimensions.get('window');
-const scale = width / 375; // Base width for scaling
+const { width, height } = Dimensions.get('window')
+const scale = width / 375 // Base width for scaling
 
-const scaleSize = (size) => size * scale;
-const scaleFont = (size) => RFPercentage(size);
+const scaleSize = (size: number): number => size * scale
+// Specify the type of `size` as `number` for scaleFont
+const scaleFont = (size: number): number => RFPercentage(size)
 
 export default function Home() {
-  const router = useRouter();
+  const router = useRouter()
 
   const logout = () => {
-    router.push('/login');
-  };
+    router.push('/login')
+  }
 
   const transactions = [
-    { id: '1', name: 'Paypal', time: 'Today | 10AM | Deposit', amount: '-$1,590' },
-    { id: '2', name: 'Paypal', time: 'Today | 10AM | Deposit', amount: '-$1,590' },
-    { id: '3', name: 'Paypal', time: 'Today | 10AM | Deposit', amount: '-$1,590' },
-  ];
+    {
+      id: '1',
+      name: 'Paypal',
+      time: 'Today | 10AM | Deposit',
+      amount: '-$1,590',
+    },
+    {
+      id: '2',
+      name: 'Paypal',
+      time: 'Today | 10AM | Deposit',
+      amount: '-$1,590',
+    },
+    {
+      id: '3',
+      name: 'Paypal',
+      time: 'Today | 10AM | Deposit',
+      amount: '-$1,590',
+    },
+  ]
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({
+    item,
+  }: {
+    item: { id: string; name: string; time: string; amount: string }
+  }) => (
     <View style={styles.transactionItem}>
       <View style={styles.transactionDetails}>
         <View style={styles.iconContainer}>
@@ -47,7 +67,7 @@ export default function Home() {
         <Text style={styles.transactionAmount}>{item.amount}</Text>
       </View>
     </View>
-  );
+  )
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -95,11 +115,19 @@ export default function Home() {
             <Text style={styles.actionText}>Add money</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
-            <FontAwesome name="pie-chart" size={scaleSize(24)} color="#2b822b" />
+            <FontAwesome
+              name="pie-chart"
+              size={scaleSize(24)}
+              color="#2b822b"
+            />
             <Text style={styles.actionText}>Remaining budget</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
-            <FontAwesome name="calculator" size={scaleSize(24)} color="#2b822b" />
+            <FontAwesome
+              name="calculator"
+              size={scaleSize(24)}
+              color="#2b822b"
+            />
             <Text style={styles.actionText}>Budget predictor</Text>
           </TouchableOpacity>
         </View>
@@ -111,7 +139,12 @@ export default function Home() {
             <View style={styles.balance}>
               <FontAwesome name="rupee" size={scaleSize(18)} color="#1E1F4B" />
               <Text style={styles.balanceAmount}> 12,395</Text>
-              <FontAwesome name="eye-slash" size={scaleSize(16)} color="black" style={styles.balanceIcons} />
+              <FontAwesome
+                name="eye-slash"
+                size={scaleSize(16)}
+                color="black"
+                style={styles.balanceIcons}
+              />
             </View>
             <TouchableOpacity style={styles.addAccount}>
               <FontAwesome name="bank" size={scaleSize(15)} color="#1E1F4B" />
@@ -124,12 +157,16 @@ export default function Home() {
               <Text style={styles.indicatorText}>$10,000</Text>
             </View>
             <View style={styles.indicator}>
-              <FontAwesome name="exclamation-triangle" size={scaleSize(18)} color="#FFC107" />
+              <FontAwesome
+                name="exclamation-triangle"
+                size={scaleSize(18)}
+                color="#FFC107"
+              />
               <Text style={styles.indicatorText}>$2,395</Text>
             </View>
           </View>
         </View>
-        
+
         {/* Last Transactions */}
         <View style={styles.containers}>
           <Text style={styles.lastTransactionsTitle}>Last Transactions</Text>
@@ -145,7 +182,7 @@ export default function Home() {
         </View>
       </View>
     </ScrollView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -376,4 +413,4 @@ const styles = StyleSheet.create({
     color: '#6C63FF',
     fontWeight: 'bold',
   },
-});
+})
