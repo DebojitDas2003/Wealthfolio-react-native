@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   TouchableOpacity,
   Text,
@@ -7,15 +7,15 @@ import {
   TextInput,
   ActivityIndicator,
   Dimensions,
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import { RFPercentage } from "react-native-responsive-fontsize";
+} from 'react-native'
+import { useRouter } from 'expo-router'
+import { RFPercentage } from 'react-native-responsive-fontsize'
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window')
 
 // Scale factors based on screen size
-const scaleWidth = width / 375; // Assuming a base width of 375 (e.g., iPhone 11)
-const scaleHeight = height / 812; // Assuming a base height of 812 (e.g., iPhone 11)
+const scaleWidth = width / 375 // Assuming a base width of 375 (e.g., iPhone 11)
+const scaleHeight = height / 812 // Assuming a base height of 812 (e.g., iPhone 11)
 
 export default function Register() {
   const [first_name, setFirstName] = useState('')
@@ -86,20 +86,20 @@ export default function Register() {
         }
       )
 
-      const result = await response.json();
+      const result = await response.json()
 
       if (response.ok) {
-        alert('User account created!');
-        router.push('/login');
+        alert('User account created!')
+        router.push('/login')
       } else {
-        setError(`Registration failed: ${result.message}`);
+        setError(`Registration failed: ${result.message}`)
       }
     } catch (err) {
-      setError('Registration failed: ' + (err as Error).message);
+      setError('Registration failed: ' + (err as Error).message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -140,6 +140,13 @@ export default function Register() {
         onChangeText={setPassword}
         secureTextEntry
       />
+      <TextInput
+        style={styles.input}
+        placeholder="Confirm Password"
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        secureTextEntry
+      />
       {loading ? (
         <ActivityIndicator size="small" style={{ margin: scaleHeight * 28 }} />
       ) : (
@@ -162,7 +169,7 @@ export default function Register() {
 
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -228,4 +235,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: RFPercentage(2), // Responsive font size
   },
-});
+})
