@@ -54,6 +54,10 @@ export default function Home() {
     },
   ]
 
+  const viewAll = () => {
+    router.push('/transactions')
+  }
+
   const renderItem = ({
     item,
   }: {
