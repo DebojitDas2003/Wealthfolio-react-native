@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Text,
   View,
@@ -25,6 +25,12 @@ export default function Home() {
 
   const logout = () => {
     router.push('/login')
+  }
+
+  const [isBalanceHidden, setIsBalanceHidden] = useState(false)
+
+  const toggleBalanceVisibility = () => {
+    setIsBalanceHidden(!isBalanceHidden)
   }
 
   const transactions = [
@@ -70,31 +76,32 @@ export default function Home() {
   )
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <View style={styles.container}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.userInfo}>
-            <Image
-              source={{
-                uri: 'https://example.com/your-profile-image.jpg',
-              }}
-              style={styles.profileImage}
-            />
-            <View>
-              <Text style={styles.welcomeText}>Welcome Back 👋</Text>
-              <Text style={styles.username}>Username</Text>
-            </View>
-          </View>
-          <View style={styles.headerIcons}>
-            <TouchableOpacity style={styles.iconButton}>
-              <FontAwesome name="cloud" size={scaleSize(20)} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconButton}>
-              <FontAwesome name="bell" size={scaleSize(20)} color="black" />
-            </TouchableOpacity>
+
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <View style={styles.userInfo}>
+          <Image
+            source={{
+              uri: 'https://example.com/your-profile-image.jpg',
+            }}
+            style={styles.profileImage}
+          />
+          <View>
+            <Text style={styles.welcomeText}>Welcome Back 👋</Text>
+            <Text style={styles.username}>Username</Text>
           </View>
         </View>
+        <View style={styles.headerIcons}>
+          <TouchableOpacity style={styles.iconButton}>
+            <FontAwesome name="cloud" size={scaleSize(20)} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <FontAwesome name="bell" size={scaleSize(20)} color="black" />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false} >
 
         {/* Greeting */}
         <Text style={styles.greetingText}>GOOD MORNING!</Text>
@@ -111,8 +118,11 @@ export default function Home() {
         {/* Actions */}
         <View style={styles.actionsContainer}>
           <TouchableOpacity style={styles.actionButton}>
-            <FontAwesome name="plus" size={scaleSize(24)} color="#2b822b" />
-            <Text style={styles.actionText}>Add money</Text>
+            <FontAwesome
+              name="plus"
+              size={scaleSize(24)}
+              color="#2b822b" />
+            <Text style={styles.actionText}>Add Money</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
             <FontAwesome
@@ -120,7 +130,7 @@ export default function Home() {
               size={scaleSize(24)}
               color="#2b822b"
             />
-            <Text style={styles.actionText}>Remaining budget</Text>
+            <Text style={styles.actionText}>Remaining Budget</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
             <FontAwesome
@@ -128,7 +138,32 @@ export default function Home() {
               size={scaleSize(24)}
               color="#2b822b"
             />
-            <Text style={styles.actionText}>Budget predictor</Text>
+            <Text style={styles.actionText}>Budget Predictor</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.actionsContainer}>
+          <TouchableOpacity style={styles.actionButton}>
+            <FontAwesome
+              name="bullseye"
+              size={scaleSize(24)}
+              color="#2b822b" />
+            <Text style={styles.actionText}>Set Goals</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton}>
+            <FontAwesome
+              name="balance-scale"
+              size={scaleSize(24)}
+              color="#2b822b"
+            />
+            <Text style={styles.actionText}>Debt Management</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton}>
+            <FontAwesome
+              name="credit-card"
+              size={scaleSize(24)}
+              color="#2b822b"
+            />
+            <Text style={styles.actionText}>Your Cards</Text>
           </TouchableOpacity>
         </View>
 
@@ -138,13 +173,17 @@ export default function Home() {
             <Text style={styles.balanceTitle}>Account balance</Text>
             <View style={styles.balance}>
               <FontAwesome name="rupee" size={scaleSize(18)} color="#1E1F4B" />
-              <Text style={styles.balanceAmount}> 12,395</Text>
-              <FontAwesome
-                name="eye-slash"
-                size={scaleSize(16)}
-                color="black"
-                style={styles.balanceIcons}
-              />
+              <Text style={styles.balanceAmount}>
+                {isBalanceHidden ? '*****' : '12,395'}
+              </Text>
+              <TouchableOpacity onPress={toggleBalanceVisibility}>
+                <FontAwesome
+                  name={isBalanceHidden ? 'eye-slash' : 'eye'}
+                  size={scaleSize(16)}
+                  color="black"
+                  style={styles.balanceIcons}
+                />
+              </TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.addAccount}>
               <FontAwesome name="bank" size={scaleSize(15)} color="#1E1F4B" />
@@ -153,8 +192,13 @@ export default function Home() {
           </View>
           <View style={styles.rightContainer}>
             <View style={styles.indicator}>
-              <FontAwesome name="circle" size={scaleSize(18)} color="#1E88E5" />
-              <Text style={styles.indicatorText}>$10,000</Text>
+              <FontAwesome
+                name="circle"
+                size={scaleSize(18)}
+                color="#1E88E5" />
+              <Text style={styles.indicatorText}>
+                {isBalanceHidden ? '$ *****' : '$10,000'}
+              </Text>
             </View>
             <View style={styles.indicator}>
               <FontAwesome
@@ -162,7 +206,9 @@ export default function Home() {
                 size={scaleSize(18)}
                 color="#FFC107"
               />
-              <Text style={styles.indicatorText}>$2,395</Text>
+              <Text style={styles.indicatorText}>
+                {isBalanceHidden ? '$ *****' : '$2,395'}
+              </Text>
             </View>
           </View>
         </View>
@@ -177,30 +223,55 @@ export default function Home() {
             contentContainerStyle={styles.listContent}
           />
           <TouchableOpacity style={styles.viewAllButton}>
-            <Text style={styles.viewAllText}>view all</Text>
+            <Text
+              style={styles.viewAllText}
+              onPress={() => router.push('/transactions')}
+            >view all</Text>
           </TouchableOpacity>
         </View>
+      </ScrollView>
+
+      {/* Navigation */}
+      <View style={styles.navigation}>
+        <TouchableOpacity>
+          <FontAwesome name="home" size={scaleSize(24)} color="#2b822b" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push('/transactions')}>
+          <FontAwesome name="history" size={scaleSize(24)} color="#666" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.centerButton}>
+          <FontAwesome name="comment" size={scaleSize(24)} color="#fff" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push('/stats')}>
+          <FontAwesome name="pie-chart" size={scaleSize(24)} color="#666" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push('/profile')}>
+          <FontAwesome name="user" size={scaleSize(24)} color="#666" />
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    backgroundColor: '#D1FFD6',
   },
   container: {
     paddingHorizontal: scaleSize(20),
     paddingTop: scaleSize(10),
+    paddingBottom: scaleSize(130),
+    backgroundColor: '#D1FFD6',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: scaleSize(20),
+    marginBottom: scaleSize(10),
     backgroundColor: '#C3F9C8',
     borderRadius: scaleSize(18),
+    elevation: 3,
   },
   userInfo: {
     flexDirection: 'row',
@@ -234,6 +305,9 @@ const styles = StyleSheet.create({
     color: '#2b822b',
     marginBottom: scaleSize(20),
     paddingRight: scaleSize(50),
+    textShadowColor: '#C3F9C8', // Shadow color
+    textShadowOffset: { width: 2, height: 2 }, // Shadow's offset
+    textShadowRadius: 3, // Shadow blur radius
   },
   expenseContainer: {
     backgroundColor: '#C3F9C8',
@@ -242,6 +316,7 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(20),
     height: scaleSize(230),
     alignItems: 'center',
+    elevation: 2.5,
   },
   expenseTitle: {
     fontSize: scaleFont(3),
@@ -269,12 +344,13 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(20),
   },
   actionButton: {
-    backgroundColor: '#C3F9C8',
+    backgroundColor: '#E5F9E7',
     padding: scaleSize(10),
     borderRadius: scaleSize(10),
     alignItems: 'center',
     justifyContent: 'center',
     width: '30%',
+    elevation: 1,
   },
   actionText: {
     fontSize: scaleFont(1.4),
@@ -288,6 +364,7 @@ const styles = StyleSheet.create({
     borderRadius: scaleSize(20),
     marginBottom: scaleSize(20),
     flexDirection: 'row',
+    elevation: 3,
   },
   leftContainer: {
     width: '75%',
@@ -313,6 +390,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#2b822b',
     marginBottom: scaleSize(10),
+    marginLeft: scaleSize(10),
   },
   balanceIcons: {
     marginLeft: scaleSize(20),
@@ -413,4 +491,31 @@ const styles = StyleSheet.create({
     color: '#6C63FF',
     fontWeight: 'bold',
   },
+
+  navigation: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: scaleSize(20),
+    paddingVertical: scaleSize(15),
+    backgroundColor: '#fff',
+    borderRadius: scaleSize(20),
+    position: 'absolute',
+    bottom: scaleSize(80),
+    width: '90%',
+    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+},
+centerButton: {
+    backgroundColor: '#2b822b',
+    width: scaleSize(50),
+    height: scaleSize(50),
+    borderRadius: scaleSize(25),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -scaleSize(25),
+},
 })
