@@ -103,22 +103,24 @@ export default function Register() {
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 24, marginBottom: 20 }}>Sign Up</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="First Name"
-        value={first_name}
-        onChangeText={setFirstName}
-        autoCapitalize="none"
-      />
+      <Text style={styles.title}>Create Account</Text>
+      <View style={styles.nameInput}>
+        <TextInput
+          style={styles.inputName}
+          placeholder="First Name"
+          value={first_name}
+          onChangeText={setFirstName}
+          autoCapitalize="none"
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Last Name"
-        value={last_name}
-        onChangeText={setLastName}
-        autoCapitalize="none"
-      />
+        <TextInput
+          style={styles.inputName}
+          placeholder="Last Name"
+          value={last_name}
+          onChangeText={setLastName}
+          autoCapitalize="none"
+        />
+      </View>
       <TextInput
         style={styles.input}
         placeholder="Phone Number"
@@ -187,11 +189,24 @@ const styles = StyleSheet.create({
     marginBottom: scaleHeight * 30,
     textAlign: 'left',
   },
-  inputContainer: {
-    marginBottom: scaleHeight * 15,
-  },
   input: {
+    marginBottom: scaleHeight * 10,
     height: scaleHeight * 50,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: scaleHeight * 10,
+    paddingHorizontal: scaleWidth * 15,
+    backgroundColor: '#fff',
+    fontSize: RFPercentage(2), // Responsive font size
+  },
+  nameInput: {
+    flexDirection: 'row',
+    justifyContent:'space-between',
+  },
+  inputName: {
+    marginBottom: scaleHeight * 10,
+    height: scaleHeight * 50,
+    width: width * 0.44,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: scaleHeight * 10,
