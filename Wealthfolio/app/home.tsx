@@ -12,6 +12,7 @@ import {
 import { useRouter } from 'expo-router'
 import { FontAwesome } from '@expo/vector-icons'
 import { RFPercentage } from 'react-native-responsive-fontsize'
+import CustomSidebar from './sidebar';
 
 const { width, height } = Dimensions.get('window')
 const scale = width / 375 // Base width for scaling
@@ -26,6 +27,12 @@ export default function Home() {
   const logout = () => {
     router.push('/login')
   }
+
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
 
   const [isBalanceHidden, setIsBalanceHidden] = useState(false)
 
@@ -85,12 +92,14 @@ export default function Home() {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.userInfo}>
-          <Image
-            source={{
-              uri: 'https://example.com/your-profile-image.jpg',
-            }}
-            style={styles.profileImage}
-          />
+          <TouchableOpacity onPress={toggleSidebar}>
+            <Image
+              source={{
+                uri: 'https://example.com/your-profile-image.jpg',
+              }}
+              style={styles.profileImage}
+            />
+          </TouchableOpacity>
           <View>
             <Text style={styles.welcomeText}>Welcome Back 👋</Text>
             <Text style={styles.username}>Username</Text>
@@ -101,7 +110,7 @@ export default function Home() {
             <FontAwesome name="cloud" size={scaleSize(20)} color="black" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <FontAwesome name="bell" size={scaleSize(20)} color="black" />
+            <FontAwesome name="bell" size={scaleSize(20)} color="black" onPress={() => router.push('/notifications')} />
           </TouchableOpacity>
         </View>
       </View>
@@ -128,7 +137,7 @@ export default function Home() {
               color="#2b822b" />
             <Text style={styles.actionText}>Add Money</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/remaining_budget')}>
             <FontAwesome
               name="pie-chart"
               size={scaleSize(24)}
@@ -136,7 +145,7 @@ export default function Home() {
             />
             <Text style={styles.actionText}>Remaining Budget</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/budget_predictor')}>
             <FontAwesome
               name="calculator"
               size={scaleSize(24)}
@@ -161,7 +170,7 @@ export default function Home() {
             />
             <Text style={styles.actionText}>Debt Management</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/cards')}>
             <FontAwesome
               name="credit-card"
               size={scaleSize(24)}
@@ -189,7 +198,7 @@ export default function Home() {
                 />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.addAccount}>
+            <TouchableOpacity style={styles.addAccount} onPress={() => router.push('/add_account')}>
               <FontAwesome name="bank" size={scaleSize(15)} color="#1E1F4B" />
               <Text style={styles.addAccountText}>Add bank account</Text>
             </TouchableOpacity>
@@ -243,7 +252,7 @@ export default function Home() {
         <TouchableOpacity onPress={() => router.push('/transactions')}>
           <FontAwesome name="history" size={scaleSize(24)} color="#666" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.centerButton}>
+        <TouchableOpacity style={styles.centerButton} onPress={() => router.push('/chatbot')}>
           <FontAwesome name="comment" size={scaleSize(24)} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.push('/stats')}>
@@ -512,8 +521,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 6,
-},
-centerButton: {
+  },
+  centerButton: {
     backgroundColor: '#2b822b',
     width: scaleSize(50),
     height: scaleSize(50),
@@ -521,5 +530,5 @@ centerButton: {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: -scaleSize(25),
-},
+  },
 })

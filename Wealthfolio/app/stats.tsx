@@ -104,7 +104,7 @@ export default function StatsPage() {
                 <TouchableOpacity onPress={() => router.push('/transactions')}>
                     <FontAwesome name="history" size={scaleSize(24)} color="#666" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.centerButton}>
+                <TouchableOpacity style={styles.centerButton} onPress={() => router.push('/chatbot')}>
                     <FontAwesome name="comment" size={scaleSize(24)} color="#fff" />
                 </TouchableOpacity>
                 <TouchableOpacity>
