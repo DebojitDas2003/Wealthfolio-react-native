@@ -74,7 +74,7 @@ export default function AccountDetailsPage() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#E6FFE6', // Light green background
+        backgroundColor: '#D1FFD6', // Light green background
         padding: scaleSize(20),
     },
     header: {

@@ -179,6 +179,31 @@ export default function Home() {
             <Text style={styles.actionText}>Your Cards</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.actionsContainer}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/bank_accounts')}>
+            <FontAwesome
+              name="bullseye"
+              size={scaleSize(24)}
+              color="#2b822b" />
+            <Text style={styles.actionText}>My Accounts</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/calculator')}>
+            <FontAwesome
+              name="balance-scale"
+              size={scaleSize(24)}
+              color="#2b822b"
+            />
+            <Text style={styles.actionText}>EMI Calculator</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/cards')}>
+            <FontAwesome
+              name="credit-card"
+              size={scaleSize(24)}
+              color="#2b822b"
+            />
+            <Text style={styles.actionText}>Your Rewards</Text>
+          </TouchableOpacity>
+        </View>
 
         {/* Account Balance */}
         <View style={styles.balanceContainer}>
@@ -363,6 +388,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '30%',
+    height: scaleSize(80),
     elevation: 1,
   },
   actionText: {
