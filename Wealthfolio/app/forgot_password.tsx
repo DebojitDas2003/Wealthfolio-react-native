@@ -17,41 +17,36 @@ const { width, height } = Dimensions.get('window');
 const scaleWidth = width / 375; // Assuming a base width of 375 (e.g., iPhone 11)
 const scaleHeight = height / 812; // Assuming a base height of 812 (e.g., iPhone 11)
 
-export default function Login() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
 
-  const signIn = async () => {
+  const handlePasswordReset = async () => {
     setLoading(true);
     try {
       const response = await fetch(
-        'http://127.0.0.1:5000/auth_redirect/signin',
+        'http://127.0.0.1:5000/auth_redirect/forgot_password',
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            Email: email,
-            PasswordHash: password,
-            client_id: '0037a3a1-5ca9-4120-95ad-cfca2736232b',
-            client_secret: 'b4285a0e-19cf-40a4-8853-42bd4d50e3d3',
-          }),
+          body: JSON.stringify({ Email: email }),
         }
-      )
+      );
 
       const result = await response.json();
 
       if (response.ok) {
-        router.push('/home');
+        setMessage('Password reset instructions sent to your email.');
       } else {
-        setError(`Sign in failed: ${result.message}`);
+        setError(`Password reset failed: ${result.message}`);
       }
     } catch (err) {
-      setError('Sign in failed: ' + (err as Error).message);
+      setError('Password reset failed: ' + (err as Error).message);
     } finally {
       setLoading(false);
     }
@@ -59,52 +54,39 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Log In</Text>
+      <Text style={styles.title}>Forgot Password</Text>
 
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Your email"
+          placeholder="Enter your email"
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
         />
       </View>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-      </View>
-
-      <TouchableOpacity style={styles.forgotPassword} onPress={() => router.push('/forgot_password')}>
-        <Text style={styles.forgotPasswordText}>Forgot password?</Text>
-      </TouchableOpacity>
-
       {loading ? (
         <ActivityIndicator size="small" style={{ margin: scaleHeight * 28 }} />
       ) : (
         <>
-          <TouchableOpacity style={styles.button} onPress={signIn}>
-            <Text style={styles.buttonText}>Log in</Text>
+          <TouchableOpacity style={styles.button} onPress={handlePasswordReset}>
+            <Text style={styles.buttonText}>Send Reset Instructions</Text>
           </TouchableOpacity>
 
-          <View style={styles.signUpContainer}>
-            <Text style={styles.signUpText}>Don’t have an account?</Text>
+          <View style={styles.signInContainer}>
+            <Text style={styles.signInText}>Remember your password?</Text>
             <Text
-              style={styles.signUpLink}
-              onPress={() => router.push('/register')}
+              style={styles.signInLink}
+              onPress={() => router.push('/login')}
             >
-              Sign up
+              Sign in
             </Text>
           </View>
         </>
       )}
 
+      {message ? <Text style={styles.successText}>{message}</Text> : null}
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
     </View>
   );
@@ -137,14 +119,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontSize: RFPercentage(2), // Responsive font size
   },
-  forgotPassword: {
-    alignItems: 'flex-end',
-    marginBottom: scaleHeight * 30,
-  },
-  forgotPasswordText: {
-    color: '#888',
-    fontSize: RFPercentage(2), // Responsive font size
-  },
   button: {
     backgroundColor: '#1E1F4B',
     marginTop: scaleHeight * 30,
@@ -159,16 +133,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: RFPercentage(2.5), // Responsive font size
   },
-  signUpContainer: {
+  signInContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: scaleHeight * 20,
   },
-  signUpText: {
+  signInText: {
     fontSize: RFPercentage(2), // Responsive font size
     color: '#888',
   },
-  signUpLink: {
+  signInLink: {
     fontSize: RFPercentage(2), // Responsive font size
     color: '#1E1F4B',
     fontWeight: 'bold',
@@ -177,6 +151,12 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
+    marginTop: scaleHeight * 10,
+    textAlign: 'center',
+    fontSize: RFPercentage(2), // Responsive font size
+  },
+  successText: {
+    color: 'green',
     marginTop: scaleHeight * 10,
     textAlign: 'center',
     fontSize: RFPercentage(2), // Responsive font size

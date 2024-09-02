@@ -35,6 +35,23 @@ export default function ProfilePage() {
                     <Text style={styles.userEmail}>john.doe@example.com</Text>
                 </View>
 
+                {/* Financial Overview Section */}
+                <View style={styles.financialOverviewSection}>
+                    <Text style={styles.sectionTitle}>Financial Overview</Text>
+                    <View style={styles.infoRow}>
+                        <Text style={styles.infoLabel}>Total Balance:</Text>
+                        <Text style={styles.infoValue}>$12,345.67</Text>
+                    </View>
+                    <View style={styles.infoRow}>
+                        <Text style={styles.infoLabel}>Monthly Income:</Text>
+                        <Text style={styles.infoValue}>$4,000.00</Text>
+                    </View>
+                    <View style={styles.infoRow}>
+                        <Text style={styles.infoLabel}>Total Savings:</Text>
+                        <Text style={styles.infoValue}>$5,678.90</Text>
+                    </View>
+                </View>
+
                 {/* Account Information */}
                 <View style={styles.accountInfoSection}>
                     <Text style={styles.sectionTitle}>Account Information</Text>
@@ -87,7 +104,7 @@ export default function ProfilePage() {
                 <TouchableOpacity>
                     <FontAwesome name="history" size={scaleSize(24)} color="#666" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.centerButton}>
+                <TouchableOpacity style={styles.centerButton} onPress={() => router.push('/chatbot')}>
                     <FontAwesome name="comment" size={scaleSize(24)} color="#fff" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => router.push('/stats')}>
@@ -156,7 +173,7 @@ const styles = StyleSheet.create({
         fontSize: scaleFont(1.8),
         color: '#666',
     },
-    accountInfoSection: {
+    financialOverviewSection: {
         backgroundColor: '#C3F9C8',
         borderRadius: scaleSize(15),
         padding: scaleSize(15),
@@ -181,6 +198,12 @@ const styles = StyleSheet.create({
         fontSize: scaleFont(1.8),
         fontWeight: '600',
         color: '#2b822b',
+    },
+    accountInfoSection: {
+        backgroundColor: '#C3F9C8',
+        borderRadius: scaleSize(15),
+        padding: scaleSize(15),
+        marginBottom: scaleSize(20),
     },
     settingsSection: {
         backgroundColor: '#D1FFD6',
