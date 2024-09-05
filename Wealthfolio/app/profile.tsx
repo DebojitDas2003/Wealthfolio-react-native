@@ -17,20 +17,23 @@ export default function ProfilePage() {
         <View style={styles.container}>
             {/* Header */}
             <View style={styles.header}>
-                <View style={styles.userInfo}>
-                    <Image
-                        source={{
-                            uri: 'https://example.com/your-profile-image.jpg',
-                        }}
-                        style={styles.profileImage}
-                    />
-                    <Text style={styles.title}>My Profile</Text>
-                </View>
+                <Text style={styles.title}>My Profile</Text>
             </View>
 
             <ScrollView style={styles.profileContainer} showsVerticalScrollIndicator={false}>
                 {/* User Info Section */}
                 <View style={styles.userDetailsSection}>
+                    <TouchableOpacity onPress={() => {/* Handle edit profile picture */ }}>
+                        <Image
+                            source={{
+                                uri: 'https://example.com/your-profile-image.jpg', // Replace with actual profile picture URL
+                            }}
+                            style={styles.profileImage}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push('/profile_edit')}>
+                        <FontAwesome name="edit" size={scaleSize(24)} color="#2b822b" style={styles.editIcon} />
+                    </TouchableOpacity>
                     <Text style={styles.userName}>John Doe</Text>
                     <Text style={styles.userEmail}>john.doe@example.com</Text>
                 </View>
@@ -127,23 +130,14 @@ const styles = StyleSheet.create({
         paddingBottom: scaleSize(70),
     },
     header: {
+        height: scaleSize(50),
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
         marginBottom: scaleSize(10),
         backgroundColor: '#C3F9C8',
         borderRadius: scaleSize(18),
         elevation: 3,
-    },
-    userInfo: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    profileImage: {
-        width: scaleSize(50),
-        height: scaleSize(50),
-        borderRadius: scaleSize(25),
-        marginRight: scaleSize(10),
     },
     title: {
         width: scaleSize(220),
@@ -158,20 +152,28 @@ const styles = StyleSheet.create({
     userDetailsSection: {
         alignItems: 'center',
         marginBottom: scaleSize(20),
-        backgroundColor: '#E5F9E7',
+        backgroundColor: '#30A13C',
         borderRadius: scaleSize(15),
         padding: scaleSize(15),
         elevation: 3,
     },
+    profileImage: {
+        width: scaleSize(50),
+        height: scaleSize(50),
+        borderRadius: scaleSize(25),
+    },
+    editIcon: {
+        marginLeft: 'auto',
+    },
     userName: {
         fontSize: scaleFont(2.5),
         fontWeight: 'bold',
-        color: '#333',
+        color: '#FFFFFF',
         marginBottom: scaleSize(5),
     },
     userEmail: {
         fontSize: scaleFont(1.8),
-        color: '#666',
+        color: '#D7D7D7',
     },
     financialOverviewSection: {
         backgroundColor: '#C3F9C8',

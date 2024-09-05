@@ -166,6 +166,12 @@ export default function Home() {
 
         {/* Actions */}
         <View style={styles.actionsContainer}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/referral')}>
+            <FontAwesome
+              name="plus"
+              size={scaleSize(24)}
+              color="#2b822b" />
+            <Text style={styles.actionText}>Refer & Earn</Text>
           <TouchableOpacity style={styles.actionButton}>
             <FontAwesome name="plus" size={scaleSize(24)} color="#2b822b" />
             <Text style={styles.actionText}>Add Money</Text>
@@ -194,11 +200,16 @@ export default function Home() {
           </TouchableOpacity>
         </View>
         <View style={styles.actionsContainer}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/goals')}>
+            <FontAwesome
+              name="bullseye"
+              size={scaleSize(24)}
+              color="#2b822b" />
           <TouchableOpacity style={styles.actionButton}>
             <FontAwesome name="bullseye" size={scaleSize(24)} color="#2b822b" />
             <Text style={styles.actionText}>Set Goals</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/debt')}>
             <FontAwesome
               name="balance-scale"
               size={scaleSize(24)}
@@ -216,6 +227,31 @@ export default function Home() {
               color="#2b822b"
             />
             <Text style={styles.actionText}>Your Cards</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.actionsContainer}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/bank_accounts')}>
+            <FontAwesome
+              name="bullseye"
+              size={scaleSize(24)}
+              color="#2b822b" />
+            <Text style={styles.actionText}>My Accounts</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/calculator')}>
+            <FontAwesome
+              name="balance-scale"
+              size={scaleSize(24)}
+              color="#2b822b"
+            />
+            <Text style={styles.actionText}>EMI Calculator</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/rewards')}>
+            <FontAwesome
+              name="credit-card"
+              size={scaleSize(24)}
+              color="#2b822b"
+            />
+            <Text style={styles.actionText}>Your Rewards</Text>
           </TouchableOpacity>
         </View>
 
@@ -286,6 +322,19 @@ export default function Home() {
       </ScrollView>
 
       {/* Navigation */}
+      <View style={styles.module}>
+            {/* Add with Voice Button */}
+            <TouchableOpacity style={styles.voiceButton}>
+                <FontAwesome name="microphone" size={scaleSize(20)} color="#FF5722" />
+                <Text style={styles.voiceButtonText}>Add with voice</Text>
+            </TouchableOpacity>
+
+            {/* Scan Bill Button */}
+            <TouchableOpacity style={styles.scanButton}>
+                <FontAwesome name="qrcode" size={scaleSize(20)} color="#fff" />
+                <Text style={styles.scanButtonText}>Scan bill</Text>
+            </TouchableOpacity>
+      </View>
       <View style={styles.navigation}>
         <TouchableOpacity>
           <FontAwesome name="home" size={scaleSize(24)} color="#2b822b" />
@@ -406,6 +455,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '30%',
+    height: scaleSize(80),
     elevation: 1,
   },
   actionText: {
@@ -547,7 +597,52 @@ const styles = StyleSheet.create({
     color: '#6C63FF',
     fontWeight: 'bold',
   },
-
+  module: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: -scaleSize(85),
+    marginBottom: scaleSize(40),
+  },
+  voiceButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1E496F',
+    paddingVertical: scaleSize(10),
+    paddingHorizontal: scaleSize(15),
+    borderTopLeftRadius: scaleSize(25),
+    borderBottomLeftRadius: scaleSize(25),
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    width: width* 0.3,
+    height: height* 0.06
+  },
+  voiceButtonText: {
+    color: '#fff',
+    fontSize: scaleFont(1.5),
+    marginLeft: scaleSize(10),
+    fontWeight: '400',
+    textAlign: 'center',
+  },
+  scanButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#4CAF50',
+    paddingVertical: scaleSize(10),
+    paddingHorizontal: scaleSize(15),
+    borderTopRightRadius: scaleSize(25),
+    borderBottomRightRadius: scaleSize(25),
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    width: width* 0.3,
+    height: height* 0.06
+  },
+  scanButtonText: {
+    color: '#fff',
+    fontSize: scaleFont(1.8),
+    marginLeft: scaleSize(10),
+    fontWeight: '400',
+  },
   navigation: {
     flexDirection: 'row',
     justifyContent: 'space-between',
