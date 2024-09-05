@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Text,
   View,
@@ -12,7 +12,7 @@ import {
 import { useRouter } from 'expo-router'
 import { FontAwesome } from '@expo/vector-icons'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import CustomSidebar from './sidebar';
+import CustomSidebar from './sidebar'
 
 const { width, height } = Dimensions.get('window')
 const scale = width / 375 // Base width for scaling
@@ -23,16 +23,46 @@ const scaleFont = (size: number): number => RFPercentage(size)
 
 export default function Home() {
   const router = useRouter()
+  const [username, setUsername] = useState<string>('')
+
+  useEffect(() => {
+    // Fetch user data when the component mounts
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch(
+          'http://127.0.0.1:5000/auth_redirect/profile',
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+
+        if (response.ok) {
+          const data = await response.json()
+          setUsername(data.username) // Set the fetched username
+        } else {
+          console.error('Failed to fetch user profile')
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error)
+      }
+    }
+
+    fetchUserProfile()
+  }, [])
 
   const logout = () => {
     router.push('/login')
   }
 
-  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(false)
 
   const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
-  };
+    setSidebarVisible(!sidebarVisible)
+  }
 
   const [isBalanceHidden, setIsBalanceHidden] = useState(false)
 
@@ -87,7 +117,6 @@ export default function Home() {
   )
 
   return (
-
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
@@ -102,7 +131,7 @@ export default function Home() {
           </TouchableOpacity>
           <View>
             <Text style={styles.welcomeText}>Welcome Back 👋</Text>
-            <Text style={styles.username}>Username</Text>
+            <Text style={styles.username}>{username}</Text>
           </View>
         </View>
         <View style={styles.headerIcons}>
@@ -110,12 +139,19 @@ export default function Home() {
             <FontAwesome name="cloud" size={scaleSize(20)} color="black" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <FontAwesome name="bell" size={scaleSize(20)} color="black" onPress={() => router.push('/notifications')} />
+            <FontAwesome
+              name="bell"
+              size={scaleSize(20)}
+              color="black"
+              onPress={() => router.push('/notifications')}
+            />
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false} >
-
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Greeting */}
         <Text style={styles.greetingText}>GOOD MORNING!</Text>
 
@@ -131,13 +167,13 @@ export default function Home() {
         {/* Actions */}
         <View style={styles.actionsContainer}>
           <TouchableOpacity style={styles.actionButton}>
-            <FontAwesome
-              name="plus"
-              size={scaleSize(24)}
-              color="#2b822b" />
+            <FontAwesome name="plus" size={scaleSize(24)} color="#2b822b" />
             <Text style={styles.actionText}>Add Money</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/remaining_budget')}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => router.push('/remaining_budget')}
+          >
             <FontAwesome
               name="pie-chart"
               size={scaleSize(24)}
@@ -145,7 +181,10 @@ export default function Home() {
             />
             <Text style={styles.actionText}>Remaining Budget</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/budget_predictor')}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => router.push('/budget_predictor')}
+          >
             <FontAwesome
               name="calculator"
               size={scaleSize(24)}
@@ -156,10 +195,7 @@ export default function Home() {
         </View>
         <View style={styles.actionsContainer}>
           <TouchableOpacity style={styles.actionButton}>
-            <FontAwesome
-              name="bullseye"
-              size={scaleSize(24)}
-              color="#2b822b" />
+            <FontAwesome name="bullseye" size={scaleSize(24)} color="#2b822b" />
             <Text style={styles.actionText}>Set Goals</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
@@ -170,7 +206,10 @@ export default function Home() {
             />
             <Text style={styles.actionText}>Debt Management</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/cards')}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => router.push('/cards')}
+          >
             <FontAwesome
               name="credit-card"
               size={scaleSize(24)}
@@ -198,17 +237,17 @@ export default function Home() {
                 />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.addAccount} onPress={() => router.push('/add_account')}>
+            <TouchableOpacity
+              style={styles.addAccount}
+              onPress={() => router.push('/add_account')}
+            >
               <FontAwesome name="bank" size={scaleSize(15)} color="#1E1F4B" />
               <Text style={styles.addAccountText}>Add bank account</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.rightContainer}>
             <View style={styles.indicator}>
-              <FontAwesome
-                name="circle"
-                size={scaleSize(18)}
-                color="#1E88E5" />
+              <FontAwesome name="circle" size={scaleSize(18)} color="#1E88E5" />
               <Text style={styles.indicatorText}>
                 {isBalanceHidden ? '$ *****' : '$10,000'}
               </Text>
@@ -239,7 +278,9 @@ export default function Home() {
             <Text
               style={styles.viewAllText}
               onPress={() => router.push('/transactions')}
-            >view all</Text>
+            >
+              view all
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -252,7 +293,10 @@ export default function Home() {
         <TouchableOpacity onPress={() => router.push('/transactions')}>
           <FontAwesome name="history" size={scaleSize(24)} color="#666" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.centerButton} onPress={() => router.push('/chatbot')}>
+        <TouchableOpacity
+          style={styles.centerButton}
+          onPress={() => router.push('/chatbot')}
+        >
           <FontAwesome name="comment" size={scaleSize(24)} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.push('/stats')}>
@@ -262,7 +306,6 @@ export default function Home() {
           <FontAwesome name="user" size={scaleSize(24)} color="#666" />
         </TouchableOpacity>
       </View>
-
     </View>
   )
 }
